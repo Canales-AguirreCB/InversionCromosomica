@@ -11,10 +11,13 @@ En esta actividad utilizando paquetes de R tales como ADEGENET ([Jombart and Ahm
   
   ### :warning: Previo a realizar esta actividad, leer los siguientes articulos y descargar los que sean necesarios: :warning:
 
-**Primer-BLAST**
+**ADEGENET**
+>Jombart, T., & Ahmed, I. (2011). [adegenet 1.3-1: new tools for the analysis of genome-wide SNP data](https://doi.org/10.1093/bioinformatics/btr521). Bioinformatics, 27(21), 3070-3071.
 
->Ye, J., Coulouris, G., Zaretskaya, I., Cutcutache, I., Rozen, S., & Madden, T.L. (2012). [Primer-BLAST: a tool to design target-specific primers for polymerase chain reaction](https://bmcbioinformatics.biomedcentral.com/track/pdf/10.1186/1471-2105-13-134.pdf). BMC Bioinformatics, 13(1), 1-11. 
+**PLINK**
 
-**MSATCOMMANDER**
+>Purcell, S., Neale, B., Todd-Brown, K., Thomas, L., Ferreira, M. A., Bender, D., ... & Sham, P. C. (2007). [PLINK: a tool set for whole-genome association and population-based linkage analyses](https://doi.org/10.1086/519795). The American Journal of Human Genetics, 81(3), 559-575. ([Descargar](https://www.cog-genomics.org/plink/))
+
+**r<sup>2</sup>**
 
 >Faircloth, B.C. (2008). [MSATCOMMANDER: Detection of microsatellite repeat arrays and automated, locus‐specific primer design](http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.720.2181&rep=rep1&type=pdf). Molecular Ecology Resources, 8(1), 92-94. ([Descargar](https://code.google.com/archive/p/msatcommander/downloads))
