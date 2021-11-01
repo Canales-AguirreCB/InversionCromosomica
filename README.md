@@ -18,9 +18,23 @@ En esta actividad utilizando paquetes de R tales como ADEGENET ([Jombart and Ahm
 
 >Purcell, S., Neale, B., Todd-Brown, K., Thomas, L., Ferreira, M. A., Bender, D., ... & Sham, P. C. (2007). [PLINK: a tool set for whole-genome association and population-based linkage analyses](https://doi.org/10.1086/519795). The American Journal of Human Genetics, 81(3), 559-575. ([Descargar](https://www.cog-genomics.org/plink/))
 
-**r<sup>2</sup>**
+**Lecturas**
 >Wellenreuther, M., & Bernatchez, L. (2018). [Eco-evolutionary genomics of chromosomal inversions](https://doi.org/10.1016/j.tree.2018.04.002). Trends in ecology & evolution, 33(6), 427-440.
+
 >Arostegui, M. C., Quinn, T. P., Seeb, L. W., Seeb, J. E., & McKinney, G. J. (2019). [Retention of a chromosomal inversion from an anadromous ancestor provides the genetic basis for alternative freshwater ecotypes in rainbow trout](https://doi.org/10.1111/mec.15037). Molecular Ecology, 28(6), 1412-1427.
+
 >Mérot, C. (2020). [Making the most of population genomic data to understand the importance of chromosomal inversions for adaptation and speciation](https://doi.org/10.1111/mec.15500). Molecular Ecology, 29(14), 2513-2516.
+
 >McKinney, G., McPhee, M. V., Pascal, C., Seeb, J. E., & Seeb, L. W. (2020). [Network analysis of linkage disequilibrium reveals genome architecture in chum salmon](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7202013/). G3: Genes, Genomes, Genetics, 10(5), 1553-1561.
+
 >Mérot, C., Oomen, R. A., Tigano, A., & Wellenreuther, M. (2020). [A roadmap for understanding the evolutionary significance of structural genomic variation](https://doi.org/10.1016/j.tree.2020.03.002). Trends in Ecology & Evolution, 35(7), 561-572.
+
+
+### :nerd_face: Información y datos :nerd_face:
+Esta actividad práctica utilizará datos aún no publicados, donde el manuscrito esta actualmente en praparación. La especie utilizada es _Oncorhynchus mykiss_ (Trucha arcoíris) muestreada en tres localidades en el lago Llanquihue. Especificamente, se utilizan marcadores SNPs obtenidos desde RADseq.
+
+
+# Actividad práctica
+______
+
+
