@@ -9,7 +9,7 @@ Esta actividad tiene como objetivo entregar herramientas para identificar potenc
 En esta actividad utilizando paquetes de R tales como ADEGENET ([Jombart and Ahmed, 2011](https://doi.org/10.1093/bioinformatics/btr521)) revelaremos patrones de diferenciacion poblacional a nivel cromosómico usando un analisis de componentes principales (PCA). Adicionalmente, visualizaremos patrones de desequilibrio de ligamiento en cada cromosoma calculando el estadistico r<sup>2</sup> ([Hill and Robertson, 1968](https://link.springer.com/article/10.1007/BF01245622)) por cada par de loci usando el programa PLINK ([Purcell et al. 2007](https://doi.org/10.1086/519795)).
     
   
-  ### :warning: Previo a realizar esta actividad, leer los siguientes articulos y descargar los programas que sean necesarios: :warning:
+  ### :warning: Leer los siguientes articulos y descargar los programas que sean necesarios: :warning:
 
 **ADEGENET**
 >Jombart, T., & Ahmed, I. (2011). [adegenet 1.3-1: new tools for the analysis of genome-wide SNP data](https://doi.org/10.1093/bioinformatics/btr521). Bioinformatics, 27(21), 3070-3071.
@@ -32,6 +32,7 @@ En esta actividad utilizando paquetes de R tales como ADEGENET ([Jombart and Ahm
 
 ### :nerd_face: Información y datos :nerd_face:
 Esta actividad práctica utilizará datos aún no publicados, donde el manuscrito esta actualmente en praparación. La especie utilizada es _Oncorhynchus mykiss_ (Trucha arcoíris) muestreada en tres localidades en el lago Llanquihue. Especificamente, se utilizan marcadores SNPs obtenidos desde RADseq.
+
 
 
 # Actividad práctica
