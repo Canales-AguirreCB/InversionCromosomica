@@ -38,4 +38,24 @@ Esta actividad práctica utilizará datos aún no publicados, donde el manuscrit
 # Actividad práctica
 ______
 
+## Correr en GUI
+1. Cargar libreria
+```sh
+library("adegenet")
+library("adegenet")
+library("adegenet")
+library("adegenet")
+```
+2. Abrir interfaz gráfica
+```sh
+Geneland.GUI(lib.loc = NULL)
+```
+3. Habilitar opciones avanzadas (Figura 1)![image](https://user-images.githubusercontent.com/58198031/137951221-bd232bdd-c4e9-401a-92b5-b23a21ee3c55.png)
+
+4. En la pestaña Data Files es necesario establecer el directorio donde se guardaran los resultados obtenidos y cada output generado por GENELAND. Para esto seleccione Output directory y seleccione la carpeta “Práctico Geneland”. Posteriormente incorpore su base de datos de coordenadas geográficas, para esto presione Coordinate file y seleccione el archivo **corr.txt**, que se encuentra en la carpeta “Práctico Geneland”. Paso siguiente es incorporar su base de datos de genotipos, para esto presione Codominant markers file y seleccione el archivo **gene.txt**, que se encuentra en la carpeta “Práctico Geneland” (Figura 2)![image](https://user-images.githubusercontent.com/58198031/137951687-75d04023-28c0-49bf-b7eb-24ad0e5be15d.png)
+
+
+
+
+
 
