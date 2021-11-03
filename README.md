@@ -38,8 +38,7 @@ Parte del codigo de este practico fue tomado y modificado de https://tomjenkins.
 # Actividad práctica
 ______
 
-## Correr en GUI
-1. Cargar libreria
+### Cargar librerias
 ```sh
 library(adegenet)
 library(poppr)
@@ -52,26 +51,22 @@ library(scales)
 library(vcfR)
 library(tidyverse)
 ```
-2. #load popmap and create a list with individual ID and sites
+### Cargar popmap y crear lista con ID individuales y sitios
 ```sh
 popmap<-read.table("popmap.txt", sep= "\t", stringsAsFactors = FALSE)
 ind=as.character(popmap$V1) # individual ID
 site = as.character(popmap$V2) # site ID
 ```
-3. #load popmap and create a list with individual ID and sites
+### Cargar archivo .vcf y covertir a formato genind
 ```sh
-#load vcf and convert in genind
 vcf <- vcfR::read.vcfR("llqSNPmapped.vcf")
 genind <- vcfR2genind(vcf, ploidy=2, ind.names = ind, pop = site)
 ```
 
-4. #Perform a PCA (principle components analysis) on the species data set.
+### Realizar un analisis de componentes principales para el set de datos
 ```sh
-# Replace missing data with the mean allele frequencies
-x = tab(genind, NA.method = "mean")
-
-# Perform PCA
-pca1 = dudi.pca(x, scannf = FALSE, scale = FALSE, nf = 3)
+x = tab(genind, NA.method = "mean") # Sustituir los datos que faltan por las frecuencias alélicas medias
+pca1 = dudi.pca(x, scannf = FALSE, scale = FALSE, nf = 3) # Realizar el PCA
 
 # Analyse how much percent of genetic variance is explained by each axis
 percent = pca1$eig/sum(pca1$eig)*100
@@ -79,28 +74,15 @@ barplot(percent, ylab = "Genetic variance explained by eigenvectors (%)", ylim =
         names.arg = round(percent, 1))
 ```
 
-5. #Visualise PCA results.
+### Visualizar los resultados del PCA (plot).
 ```sh
-# Create a data.frame containing individual coordinates
-ind_coords = as.data.frame(pca1$li)
-
-# Rename columns of dataframe
-colnames(ind_coords) = c("Axis1","Axis2","Axis3")
-
-# Add a column containing individuals
-ind_coords$Ind = indNames(genind)
-
-# Add a column with the site IDs
-ind_coords$Site = genind$pop
-
-# Calculate centroid (average) position for each population
-centroid = aggregate(cbind(Axis1, Axis2, Axis3) ~ Site, data = ind_coords, FUN = mean)
-
-# Add centroid coordinates to ind_coords dataframe
-ind_coords = left_join(ind_coords, centroid, by = "Site", suffix = c("",".cen"))
-
-# Define colour palette
-cols = brewer.pal(nPop(genind), "Set1")
+ind_coords = as.data.frame(pca1$li) # Create a data.frame containing individual coordinates
+colnames(ind_coords) = c("Axis1","Axis2","Axis3") # Rename columns of dataframe
+ind_coords$Ind = indNames(genind) # Add a column containing individuals
+ind_coords$Site = genind$pop # Add a column with the site IDs
+centroid = aggregate(cbind(Axis1, Axis2, Axis3) ~ Site, data = ind_coords, FUN = mean) # Calculate centroid (average) position for each population
+ind_coords = left_join(ind_coords, centroid, by = "Site", suffix = c("",".cen")) # Add centroid coordinates to ind_coords dataframe
+cols = brewer.pal(nPop(genind), "Set1") # Define colour palette
 
 # Custom x and y labels
 xlab = paste("Axis 1 (", format(round(percent[1], 1), nsmall=1)," %)", sep="")
@@ -116,16 +98,11 @@ ggtheme = theme(axis.text.y = element_text(colour="black", size=12),
 )
 
 # Scatter plot axis 1 vs. 2
-ggplot(data = ind_coords, aes(x = Axis1, y = Axis2))+
-  # points
-  geom_point(aes(fill = Site), shape = 21, size = 3, show.legend = T)+
-  # custom labels
-  labs(x = xlab, y = ylab)+
-  ggtitle("Llanquihue PCA")+
-  # custom theme
-  ggtheme
+ggplot(data = ind_coords, aes(x = Axis1, y = Axis2))+ geom_point(aes(fill = Site), shape = 21, size = 3, show.legend = T)+ labs(x = xlab, y = ylab)+ ggtitle("Llanquihue PCA")+ ggtheme
+```
 
-# Export plot
+### Export plot
+```sh
 ggsave("Llanquihue_PCA.png", width = 12, height = 8, dpi = 600)
 ```
 
