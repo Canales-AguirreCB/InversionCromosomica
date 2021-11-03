@@ -1,4 +1,4 @@
-# Identificación de inversiones cromosómicas por PCA
+# Identificación de inversiones cromosómicas por PCA y LD
 
 por [Cristian B. Canales-Aguirre](https://www.researchgate.net/profile/Cristian-Canales-Aguirre)
 ______
@@ -35,7 +35,7 @@ Esta actividad práctica utilizará datos aún no publicados, donde el manuscrit
 Parte del codigo de este practico fue tomado y modificado de https://tomjenkins.netlify.app/2020/09/21/r-popgen-getting-started/
 
 
-# Actividad práctica
+# Actividad práctica PCA
 ______
 
 ### Cargar librerias
@@ -105,9 +105,56 @@ ggplot(data = ind_coords, aes(x = Axis1, y = Axis2))+ geom_point(aes(fill = Site
 ```sh
 ggsave("PCA.png", width = 12, height = 8, dpi = 600)
 ```
+______
 
+### Cargar posición en el genoma, obtener genotipos y trasponer
+```sh
+GenomePosition<-read.table("GenomePosition.txt", sep= "", stringsAsFactors = FALSE) # Cargar posición en el genoma
+vcf_genos<-extract.gt(vcf, element = "GT", mask = F, as.numeric = F, return.alleles = T, IDtoRowNames = T, extract = T, convertNA = T) # Obtener genotipos
+vcf_genos_PCAFormat<-t(vcf_genos) # Transponer genotipos
+```
 
+### Cargar función para graficar PCA por cromosoma
+```sh
+plotChromosome<-function(genotypes,chrMap,chromosome){
+  
+  #get loci on desired chromosome
+  chrLoci<-chrMap %>% filter(Chr==chromosome) %>% pull(Locus)
+  #filter to loci on chromosome5
+  filtered_genos<-genotypes[,colnames(genotypes) %in% chrLoci]
+  
+  #convert genind
+  filtered_genos_genind<-df2genind(filtered_genos, sep = "/")
+  
+  #do pca
+  filtered_genos_scaleGen<-scaleGen(filtered_genos_genind, NA.method="mean")
+  filtered_genos_PCA<-dudi.pca(filtered_genos_scaleGen, cent=FALSE, scale = FALSE, scannf=FALSE, nf=4)
+  
+  #save pca results
+  filtered_genos_PCA_results<-filtered_genos_PCA$li
+  
+  #add population column using first three letters of sample namne
+  filtered_genos_PCA_results<-rownames_to_column(filtered_genos_PCA_results,var="Sample") 
+  filtered_genos_PCA_results_pop<-filtered_genos_PCA_results %>% mutate(population=(substr(Sample,1,3)))
+  
+  plot<-ggplot()+geom_point(data = filtered_genos_PCA_results_pop, aes(x=Axis1,y=Axis2,color=population), size=2, show.legend=T)
+  print(plot)
+  return(filtered_genos_PCA_results)
+  
+}
+```
 
+### Visualizar PCA por cromosoma (e.g. Omy01, Omy05, Omy20)
+```sh
+#------Omy01
+Omy01_PCA<-plotChromosome(vcf_genos_PCAFormat,GenomePosition,"Omy01")
+
+#------Omy05
+Omy05_PCA<-plotChromosome(vcf_genos_PCAFormat,GenomePosition,"Omy05")
+
+#------Omy20
+Omy20_PCA_<-plotChromosome(vcf_genos_PCAFormat,GenomePosition,"Omy20")
+```
 
 
 
