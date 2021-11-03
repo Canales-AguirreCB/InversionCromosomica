@@ -32,7 +32,7 @@ En esta actividad utilizando paquetes de R tales como ADEGENET ([Jombart and Ahm
 
 ### :nerd_face: Información y datos :nerd_face:
 Esta actividad práctica utilizará datos aún no publicados, donde el manuscrito esta actualmente en praparación. La especie utilizada es _Oncorhynchus mykiss_ (Trucha arcoíris) muestreada en tres localidades en el lago Llanquihue. Especificamente, se utilizan marcadores SNPs obtenidos desde RADseq.
-
+Parte del codigo de este practico fue tomado y modificado de https://tomjenkins.netlify.app/2020/09/21/r-popgen-getting-started/
 
 
 # Actividad práctica
