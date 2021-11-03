@@ -41,18 +41,94 @@ ______
 ## Correr en GUI
 1. Cargar libreria
 ```sh
-library("adegenet")
-library("adegenet")
-library("adegenet")
-library("adegenet")
+library(adegenet)
+library(poppr)
+library(dplyr)
+library(hierfstat)
+library(reshape2)
+library(ggplot2)
+library(RColorBrewer)
+library(scales)
+library(vcfR)
+library(tidyverse)
 ```
-2. Abrir interfaz gráfica
+2. #load popmap and create a list with individual ID and sites
 ```sh
-Geneland.GUI(lib.loc = NULL)
+popmap<-read.table("popmap.txt", sep= "\t", stringsAsFactors = FALSE)
+ind=as.character(popmap$V1) # individual ID
+site = as.character(popmap$V2) # site ID
 ```
-3. Habilitar opciones avanzadas (Figura 1)![image](https://user-images.githubusercontent.com/58198031/137951221-bd232bdd-c4e9-401a-92b5-b23a21ee3c55.png)
+3. #load popmap and create a list with individual ID and sites
+```sh
+#load vcf and convert in genind
+vcf <- vcfR::read.vcfR("llqSNPmapped.vcf")
+genind <- vcfR2genind(vcf, ploidy=2, ind.names = ind, pop = site)
+```
 
-4. En la pestaña Data Files es necesario establecer el directorio donde se guardaran los resultados obtenidos y cada output generado por GENELAND. Para esto seleccione Output directory y seleccione la carpeta “Práctico Geneland”. Posteriormente incorpore su base de datos de coordenadas geográficas, para esto presione Coordinate file y seleccione el archivo **corr.txt**, que se encuentra en la carpeta “Práctico Geneland”. Paso siguiente es incorporar su base de datos de genotipos, para esto presione Codominant markers file y seleccione el archivo **gene.txt**, que se encuentra en la carpeta “Práctico Geneland” (Figura 2)![image](https://user-images.githubusercontent.com/58198031/137951687-75d04023-28c0-49bf-b7eb-24ad0e5be15d.png)
+4. #Perform a PCA (principle components analysis) on the species data set.
+```sh
+# Replace missing data with the mean allele frequencies
+x = tab(genind, NA.method = "mean")
+
+# Perform PCA
+pca1 = dudi.pca(x, scannf = FALSE, scale = FALSE, nf = 3)
+
+# Analyse how much percent of genetic variance is explained by each axis
+percent = pca1$eig/sum(pca1$eig)*100
+barplot(percent, ylab = "Genetic variance explained by eigenvectors (%)", ylim = c(0,10),
+        names.arg = round(percent, 1))
+```
+
+5. #Visualise PCA results.
+```sh
+# Create a data.frame containing individual coordinates
+ind_coords = as.data.frame(pca1$li)
+
+# Rename columns of dataframe
+colnames(ind_coords) = c("Axis1","Axis2","Axis3")
+
+# Add a column containing individuals
+ind_coords$Ind = indNames(genind)
+
+# Add a column with the site IDs
+ind_coords$Site = genind$pop
+
+# Calculate centroid (average) position for each population
+centroid = aggregate(cbind(Axis1, Axis2, Axis3) ~ Site, data = ind_coords, FUN = mean)
+
+# Add centroid coordinates to ind_coords dataframe
+ind_coords = left_join(ind_coords, centroid, by = "Site", suffix = c("",".cen"))
+
+# Define colour palette
+cols = brewer.pal(nPop(genind), "Set1")
+
+# Custom x and y labels
+xlab = paste("Axis 1 (", format(round(percent[1], 1), nsmall=1)," %)", sep="")
+ylab = paste("Axis 2 (", format(round(percent[2], 1), nsmall=1)," %)", sep="")
+
+# Custom theme for ggplot2
+ggtheme = theme(axis.text.y = element_text(colour="black", size=12),
+                axis.text.x = element_text(colour="black", size=12),
+                axis.title = element_text(colour="black", size=12),
+                panel.border = element_rect(colour="black", fill=NA, size=1),
+                panel.background = element_blank(),
+                plot.title = element_text(hjust=0.5, size=15) 
+)
+
+# Scatter plot axis 1 vs. 2
+ggplot(data = ind_coords, aes(x = Axis1, y = Axis2))+
+  # points
+  geom_point(aes(fill = Site), shape = 21, size = 3, show.legend = T)+
+  # custom labels
+  labs(x = xlab, y = ylab)+
+  ggtitle("Llanquihue PCA")+
+  # custom theme
+  ggtheme
+
+# Export plot
+ggsave("Llanquihue_PCA.png", width = 12, height = 8, dpi = 600)
+```
+
 
 
 
