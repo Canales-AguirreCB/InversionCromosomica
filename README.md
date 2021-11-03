@@ -63,7 +63,7 @@ vcf <- vcfR::read.vcfR("llqSNPmapped.vcf")
 genind <- vcfR2genind(vcf, ploidy=2, ind.names = ind, pop = site)
 ```
 
-### Realizar un analisis de componentes principales para el set de datos
+### Realizar un análisis de componentes principales para el set de datos
 ```sh
 x = tab(genind, NA.method = "mean") # Sustituir los datos que faltan por las frecuencias alélicas medias
 pca1 = dudi.pca(x, scannf = FALSE, scale = FALSE, nf = 3) # Realizar el PCA
@@ -74,7 +74,7 @@ barplot(percent, ylab = "Genetic variance explained by eigenvectors (%)", ylim =
         names.arg = round(percent, 1))
 ```
 
-### Visualizar los resultados del PCA (plot).
+### Visualizar los resultados del PCA (gráfico).
 ```sh
 ind_coords = as.data.frame(pca1$li) # Create a data.frame containing individual coordinates
 colnames(ind_coords) = c("Axis1","Axis2","Axis3") # Rename columns of dataframe
@@ -101,9 +101,9 @@ ggtheme = theme(axis.text.y = element_text(colour="black", size=12),
 ggplot(data = ind_coords, aes(x = Axis1, y = Axis2))+ geom_point(aes(fill = Site), shape = 21, size = 3, show.legend = T)+ labs(x = xlab, y = ylab)+ ggtitle("Llanquihue PCA")+ ggtheme
 ```
 
-### Export plot
+### Exportar el gráfico
 ```sh
-ggsave("Llanquihue_PCA.png", width = 12, height = 8, dpi = 600)
+ggsave("PCA.png", width = 12, height = 8, dpi = 600)
 ```
 
 
