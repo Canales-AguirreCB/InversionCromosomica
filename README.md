@@ -1,4 +1,4 @@
-# Identificación de inversiones cromosómicas por PCA y LD
+# Inversiones cromosómicas por PCA y LD
 
 por [Cristian B. Canales-Aguirre](https://www.researchgate.net/profile/Cristian-Canales-Aguirre)
 ______
