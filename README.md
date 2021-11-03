@@ -54,8 +54,8 @@ library(tidyverse)
 ### Cargar popmap y crear lista con ID individuales y sitios
 ```sh
 popmap<-read.table("popmap.txt", sep= "\t", stringsAsFactors = FALSE)
-ind=as.character(popmap$V1) # individual ID
-site = as.character(popmap$V2) # site ID
+ind=as.character(popmap$V1) # ID por individuo
+site = as.character(popmap$V2) # ID por sitio
 ```
 ### Cargar archivo .vcf y covertir a formato genind
 ```sh
@@ -68,7 +68,7 @@ genind <- vcfR2genind(vcf, ploidy=2, ind.names = ind, pop = site)
 x = tab(genind, NA.method = "mean") # Sustituir los datos que faltan por las frecuencias alélicas medias
 pca1 = dudi.pca(x, scannf = FALSE, scale = FALSE, nf = 3) # Realizar el PCA
 
-# Analyse how much percent of genetic variance is explained by each axis
+# Analizar qué porcentaje de la varianza genética se explica por cada eje
 percent = pca1$eig/sum(pca1$eig)*100
 barplot(percent, ylab = "Genetic variance explained by eigenvectors (%)", ylim = c(0,10),
         names.arg = round(percent, 1))
@@ -76,19 +76,19 @@ barplot(percent, ylab = "Genetic variance explained by eigenvectors (%)", ylim =
 
 ### Visualizar los resultados del PCA (gráfico).
 ```sh
-ind_coords = as.data.frame(pca1$li) # Create a data.frame containing individual coordinates
-colnames(ind_coords) = c("Axis1","Axis2","Axis3") # Rename columns of dataframe
-ind_coords$Ind = indNames(genind) # Add a column containing individuals
-ind_coords$Site = genind$pop # Add a column with the site IDs
-centroid = aggregate(cbind(Axis1, Axis2, Axis3) ~ Site, data = ind_coords, FUN = mean) # Calculate centroid (average) position for each population
-ind_coords = left_join(ind_coords, centroid, by = "Site", suffix = c("",".cen")) # Add centroid coordinates to ind_coords dataframe
+ind_coords = as.data.frame(pca1$li) # Crear un data.frame conteniendo coordinadas individuales
+colnames(ind_coords) = c("Axis1","Axis2","Axis3") # Renombrar las columnas del dataframe
+ind_coords$Ind = indNames(genind) # Adherir una columna que contiene los individuos
+ind_coords$Site = genind$pop # Adherir una columna que contiene los sitios
+centroid = aggregate(cbind(Axis1, Axis2, Axis3) ~ Site, data = ind_coords, FUN = mean) # Calcular la posicion del centroide (promedio) por cada población
+ind_coords = left_join(ind_coords, centroid, by = "Site", suffix = c("",".cen")) # Adherir las coordenadas del centroide al dataframe ind_coords
 cols = brewer.pal(nPop(genind), "Set1") # Define colour palette
 
 # Custom x and y labels
 xlab = paste("Axis 1 (", format(round(percent[1], 1), nsmall=1)," %)", sep="")
 ylab = paste("Axis 2 (", format(round(percent[2], 1), nsmall=1)," %)", sep="")
 
-# Custom theme for ggplot2
+# Tema personalizado para ggplot2
 ggtheme = theme(axis.text.y = element_text(colour="black", size=12),
                 axis.text.x = element_text(colour="black", size=12),
                 axis.title = element_text(colour="black", size=12),
@@ -97,7 +97,7 @@ ggtheme = theme(axis.text.y = element_text(colour="black", size=12),
                 plot.title = element_text(hjust=0.5, size=15) 
 )
 
-# Scatter plot axis 1 vs. 2
+# Gráfico de dispersión eje 1 vs 2
 ggplot(data = ind_coords, aes(x = Axis1, y = Axis2))+ geom_point(aes(fill = Site), shape = 21, size = 3, show.legend = T)+ labs(x = xlab, y = ylab)+ ggtitle("Llanquihue PCA")+ ggtheme
 ```
 
