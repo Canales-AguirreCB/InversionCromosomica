@@ -53,13 +53,13 @@ library(tidyverse)
 ```
 ### Cargar popmap y crear lista con ID individuales y sitios
 ```sh
-popmap<-read.table("popmap.txt", sep= "\t", stringsAsFactors = FALSE)
+popmap<-read.table("popmap_tls.txt", sep= "\t", stringsAsFactors = FALSE)
 ind=as.character(popmap$V1) # ID por individuo
 site = as.character(popmap$V2) # ID por sitio
 ```
 ### Cargar archivo .vcf y covertir a formato genind
 ```sh
-vcf <- vcfR::read.vcfR("llqSNPmapped.vcf")
+vcf <- vcfR::read.vcfR("tlsSNPmapped.vcf")
 genind <- vcfR2genind(vcf, ploidy=2, ind.names = ind, pop = site)
 ```
 
@@ -109,7 +109,7 @@ ______
 
 ### Cargar posición en el genoma, obtener genotipos y trasponer
 ```sh
-GenomePosition<-read.table("GenomePosition.txt", sep= "", stringsAsFactors = FALSE) # Cargar posición en el genoma
+GenomePosition<-read.table("GenomePosition_tls.txt", sep= "", stringsAsFactors = FALSE) # Cargar posición en el genoma
 vcf_genos<-extract.gt(vcf, element = "GT", mask = F, as.numeric = F, return.alleles = T, IDtoRowNames = T, extract = T, convertNA = T) # Obtener genotipos
 vcf_genos_PCAFormat<-t(vcf_genos) # Transponer genotipos
 ```
