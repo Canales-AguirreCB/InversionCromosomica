@@ -35,7 +35,7 @@ Esta actividad práctica utilizará datos aún no publicados, donde el manuscrit
 Parte del codigo de este practico fue tomado y modificado de https://tomjenkins.netlify.app/2020/09/21/r-popgen-getting-started/
 
 
-# Actividad práctica: Análisis de Componentes Principales (PCA)
+# Actividad: Análisis de Componentes Principales (PCA)
 ______
 
 ### Cargar librerias
@@ -144,38 +144,32 @@ plotChromosome<-function(genotypes,chrMap,chromosome){
 }
 ```
 
-### Visualizar PCA por cromosoma (e.g. Omy01, Omy05, Omy20)
+### Visualizar PCA por cromosoma (e.g. Omy01)
 ```sh
 #------Omy01
 Omy01_PCA<-plotChromosome(vcf_genos_PCAFormat,GenomePosition,"Omy01")
 
-#------Omy05
-Omy05_PCA<-plotChromosome(vcf_genos_PCAFormat,GenomePosition,"Omy05")
-
-#------Omy20
-Omy20_PCA_<-plotChromosome(vcf_genos_PCAFormat,GenomePosition,"Omy20")
 ```
+### Hacer lo mismo para todos los demas cromosomas.
 ______
 
 
-# Actividad práctica: Calcular r<sup>2</sup> (LD) y graficar plot LD por Cromosoma
+# Actividad: Calcular r<sup>2</sup> (LD) y graficar LD por Cromosoma
 ______
 ### Correr plink (e.g. Omy01)
 ```sh
 plink --file todoslossantos --chr-set 29 --r2 --inter-chr --ld-window-r2 0 --chr 1 --out omy1
 ```
 
-### Visualizar y graficar LD por cromosoma (e.g. Omy01, Omy05, Omy20)
+### Cargar resultados y graficar LD por cromosoma (e.g. Omy01)
+```sh
+Omy01LD<-read.delim("omy1.ld",sep="") # Cargar resultados r<sup>2</sup> para Omy01
+head(Omy01LD) # Revisar primeras lineas del archivo
 
-##Omy01, load LD results omy1
-Omy01LD<-read.delim("omy1.ld",sep="") #
-summary(Omy01LD)
-head(Omy01LD)
-dim(Omy01LD)
-#plot LD
-#pdf("Omy01LD.pdf",height=4,width=5)
+#Graficar r<sup>2</sup>
 Omy01LD %>% ggplot(data=.)+geom_point(aes(x=BP_A,y=BP_B,color=R2))+scale_color_gradient(low="gray99",high="gray4")+xlab("Position (bp)")+ylab("Position (bp)")+theme_classic()
-#dev.off()
+```
+### Hacer lo mismo para todos los demas cromosomas.
 
 
 
