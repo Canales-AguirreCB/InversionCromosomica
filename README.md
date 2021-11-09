@@ -98,7 +98,7 @@ ggtheme = theme(axis.text.y = element_text(colour="black", size=12),
 )
 
 # Gráfico de dispersión eje 1 vs 2
-ggplot(data = ind_coords, aes(x = Axis1, y = Axis2))+ geom_point(aes(fill = Site), shape = 21, size = 3, show.legend = T)+ labs(x = xlab, y = ylab)+ ggtitle("Llanquihue PCA")+ ggtheme
+ggplot(data = ind_coords, aes(x = Axis1, y = Axis2))+ geom_point(aes(fill = Site), shape = 21, size = 3, show.legend = T)+ labs(x = xlab, y = ylab)+ ggtitle("PCA")+ ggtheme
 ```
 
 ### Exportar el gráfico
@@ -109,8 +109,10 @@ ______
 
 ### Cargar posición en el genoma, obtener genotipos y trasponer
 ```sh
-GenomePosition<-read.table("GenomePosition_tls.txt", sep= "", stringsAsFactors = FALSE) # Cargar posición en el genoma
-vcf_genos<-extract.gt(vcf, element = "GT", mask = F, as.numeric = F, return.alleles = T, IDtoRowNames = T, extract = T, convertNA = T) # Obtener genotipos
+GenomePosition<-read.table("GenomePosition_tls.txt", sep= "", stringsAsFactors = FALSE, header = T)
+vcf_genos<-extract.gt(vcf, element = "GT", mask = FALSE, as.numeric = FALSE, 
+                                         return.alleles = TRUE, IDtoRowNames = TRUE, extract = TRUE,
+                                         convertNA = TRUE)
 vcf_genos_PCAFormat<-t(vcf_genos) # Transponer genotipos
 ```
 
@@ -148,7 +150,6 @@ plotChromosome<-function(genotypes,chrMap,chromosome){
 ```sh
 #------Omy01
 Omy01_PCA<-plotChromosome(vcf_genos_PCAFormat,GenomePosition,"Omy01")
-
 ```
 ### Hacer lo mismo para todos los demas cromosomas.
 ______
